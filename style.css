@@ -8,23 +8,27 @@ body {
 
 /* Header */
 header {
-    background-color: #E63946;
-    color: white;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     padding: 1rem;
+    background-color: #E63946;
+    color: white;
 }
-header .logo {
+header .logo img {
     height: 50px;
     margin-right: 1rem;
 }
-#darkModeToggle {
-    margin-left: auto;
-    padding: 0.5rem 1rem;
-    border: 1px solid white;
+header h1 {
+    font-size: 1.5rem;
+    margin: 0;
+}
+header button {
     background: none;
-    color: white;
+    border: 1px solid white;
     border-radius: 8px;
+    padding: 0.5rem 1rem;
+    color: white;
     cursor: pointer;
 }
 
@@ -38,8 +42,8 @@ nav .tab-button {
     padding: 1rem;
     cursor: pointer;
     border: none;
-    color: white;
     background: none;
+    color: white;
     transition: 0.3s;
 }
 nav .tab-button.active {
@@ -77,9 +81,10 @@ button:hover {
     background-color: #FF6B6B;
 }
 
-/* Tab Content */
+/* Tab content */
 .tab-content {
     display: none;
+    padding: 1rem;
 }
 .tab-content.active {
     display: block;
@@ -93,34 +98,6 @@ button:hover {
     margin: 0.5rem;
     border: 1px solid #E63946;
     border-radius: 8px;
-}
-
-/* Footer */
-footer {
-    text-align: center;
-    padding: 1rem;
-    background-color: #E63946;
-    color: white;
-    margin-top: 2rem;
-}
-
-/* Dark Mode */
-body.dark {
-    background-color: #1D3557;
-    color: #F1FAEE;
-}
-body.dark header {
-    background-color: #FF6B6B;
-}
-body.dark nav {
-    background-color: #E63946;
-}
-body.dark nav .tab-button.active {
-    background: #1D3557;
-    color: #F1FAEE;
-}
-body.dark .drop-zone {
-    border-color: #FF6B6B;
 }
 
 /* Modal */
@@ -153,7 +130,8 @@ body.dark .drop-zone {
 .compare-original, .compare-compressed {
     width: 48%;
 }
-.compare-original img, .compare-compressed img {
+.compare-original img, .compare-compressed img,
+.compare-original video, .compare-compressed video {
     max-width: 100%;
     border: 1px solid #E63946;
     border-radius: 8px;
@@ -162,4 +140,23 @@ body.dark .drop-zone {
     float: right;
     font-size: 1.5rem;
     cursor: pointer;
+}
+
+/* Dark mode */
+body.dark {
+    background-color: #1D3557;
+    color: #F1FAEE;
+}
+body.dark header {
+    background-color: #FF6B6B;
+}
+body.dark nav {
+    background-color: #E63946;
+}
+body.dark nav .tab-button.active {
+    background: #1D3557;
+    color: #F1FAEE;
+}
+body.dark .drop-zone {
+    border-color: #FF6B6B;
 }
