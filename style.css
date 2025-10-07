@@ -1,0 +1,165 @@
+/* Base */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: #F1FAEE;
+    color: #1D3557;
+}
+
+/* Header */
+header {
+    background-color: #E63946;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+}
+header .logo {
+    height: 50px;
+    margin-right: 1rem;
+}
+#darkModeToggle {
+    margin-left: auto;
+    padding: 0.5rem 1rem;
+    border: 1px solid white;
+    background: none;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* Navigation */
+nav {
+    display: flex;
+    background-color: #FF6B6B;
+}
+nav .tab-button {
+    flex: 1;
+    padding: 1rem;
+    cursor: pointer;
+    border: none;
+    color: white;
+    background: none;
+    transition: 0.3s;
+}
+nav .tab-button.active {
+    background: white;
+    color: #E63946;
+}
+
+/* Drop zones */
+.drop-zone {
+    border: 2px dashed #E63946;
+    border-radius: 12px;
+    padding: 2rem;
+    margin: 1rem 0;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.drop-zone.dragover {
+    border-color: #FF6B6B;
+    background-color: #FFEFEF;
+}
+
+/* Buttons */
+button {
+    background-color: #E63946;
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 1rem;
+    font-size: 1rem;
+}
+button:hover {
+    background-color: #FF6B6B;
+}
+
+/* Tab Content */
+.tab-content {
+    display: none;
+}
+.tab-content.active {
+    display: block;
+}
+
+/* Previews */
+#imagePreviewContainer img,
+#videoPreviewContainer video,
+#audioPreviewContainer audio {
+    max-width: 200px;
+    margin: 0.5rem;
+    border: 1px solid #E63946;
+    border-radius: 8px;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: #E63946;
+    color: white;
+    margin-top: 2rem;
+}
+
+/* Dark Mode */
+body.dark {
+    background-color: #1D3557;
+    color: #F1FAEE;
+}
+body.dark header {
+    background-color: #FF6B6B;
+}
+body.dark nav {
+    background-color: #E63946;
+}
+body.dark nav .tab-button.active {
+    background: #1D3557;
+    color: #F1FAEE;
+}
+body.dark .drop-zone {
+    border-color: #FF6B6B;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+}
+.modal-content {
+    background: #F1FAEE;
+    margin: 5% auto;
+    padding: 1rem;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 900px;
+}
+.modal-content h2 {
+    margin-top: 0;
+}
+.compare-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.compare-original, .compare-compressed {
+    width: 48%;
+}
+.compare-original img, .compare-compressed img {
+    max-width: 100%;
+    border: 1px solid #E63946;
+    border-radius: 8px;
+}
+.close {
+    float: right;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
