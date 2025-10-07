@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MaxCompress – Free Online File Compressor</title>
-<meta name="description" content="MaxCompress allows you to compress and decompress images, videos, PDFs, audio, and files online for free.">
+<title>MaxCompress – File Compressor</title>
+<meta name="description" content="MaxCompress allows you to compress images, videos, PDFs, audio, and files online for free.">
 <link rel="stylesheet" href="style.css">
 
-<!-- External Libraries -->
+<!-- Libraries -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/browser-image-compression@2.0.0/dist/browser-image-compression.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/pdf-lib/dist/pdf-lib.min.js"></script>
@@ -15,9 +15,26 @@
 </head>
 <body>
 
-<!-- HEADER LOADED SEPARATELY -->
+<!-- Load header dynamically -->
 <div id="headerContainer"></div>
+<script>
+fetch('header.html')
+  .then(response => response.text())
+  .then(data => {
+    const container = document.getElementById('headerContainer');
+    container.innerHTML = data;
 
+    // Dark mode toggle after header is loaded
+    const darkBtn = document.getElementById('darkModeToggle');
+    if(darkBtn){
+        darkBtn.addEventListener('click', () => {
+            document.body.classList.toggle('dark');
+        });
+    }
+  });
+</script>
+
+<!-- Navigation -->
 <nav>
 <button class="tab-button active" data-tab="images">Images</button>
 <button class="tab-button" data-tab="videos">Videos</button>
@@ -27,7 +44,7 @@
 </nav>
 
 <main>
-<!-- Images Section -->
+<!-- Images -->
 <section class="tab-content active" id="images">
 <h2>Image Compressor</h2>
 <label for="imageLevel">Compression Level:</label>
@@ -46,7 +63,7 @@
 <div id="imageStats"></div>
 </section>
 
-<!-- Videos Section -->
+<!-- Videos -->
 <section class="tab-content" id="videos">
 <h2>Video Compressor</h2>
 <label for="videoLevel">Compression Level:</label>
@@ -65,7 +82,7 @@
 <div id="videoStats"></div>
 </section>
 
-<!-- PDFs Section -->
+<!-- PDFs -->
 <section class="tab-content" id="pdfs">
 <h2>PDF Compressor</h2>
 <label for="pdfLevel">Compression Level:</label>
@@ -84,7 +101,7 @@
 <div id="pdfStats"></div>
 </section>
 
-<!-- Audio Section -->
+<!-- Audio -->
 <section class="tab-content" id="audio">
 <h2>Audio Compressor</h2>
 <label for="audioLevel">Compression Level:</label>
@@ -103,7 +120,7 @@
 <div id="audioStats"></div>
 </section>
 
-<!-- General Files Section -->
+<!-- Files -->
 <section class="tab-content" id="files">
 <h2>General File Compressor (ZIP)</h2>
 <div class="drop-zone" id="dropFiles">Drag & Drop Files Here or Click</div>
@@ -112,10 +129,9 @@
 <button id="compressFilesBtn">Compress Files</button>
 <div id="fileStats"></div>
 </section>
-
 </main>
 
-<!-- Modal -->
+<!-- Comparison Modal -->
 <div id="compareModal" class="modal">
 <div class="modal-content">
 <span class="close">&times;</span>
@@ -127,15 +143,6 @@
 </div>
 </div>
 
-<!-- Load Header and Scripts -->
-<script>
-fetch('header.html')
-  .then(response => response.text())
-  .then(data => {
-    document.getElementById('headerContainer').innerHTML = data;
-  });
-</script>
 <script src="script.js"></script>
-
 </body>
 </html>
