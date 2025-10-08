@@ -1,318 +1,110 @@
-/* ---------------- BASE ---------------- */
+/* ===========================
+   Animated Gradient Background Blobs
+=========================== */
 body {
-    font-family: 'Poppins', Arial, sans-serif;
-    margin: 0;
-    background: linear-gradient(135deg, #F1FAEE, #FFF7F2);
-    color: #1D3557;
-    transition: background 0.3s ease, color 0.3s ease;
     position: relative;
     overflow-x: hidden;
 }
 
-/* ---------------- BACKGROUND BLOBS ---------------- */
-body::before {
-    content: "";
-    position: fixed;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle at 30% 30%, #FF6B6B, transparent 50%),
-                radial-gradient(circle at 70% 70%, #E63946, transparent 50%),
-                radial-gradient(circle at 50% 50%, #F1FAEE, transparent 50%);
-    background-size: cover;
-    animation: floatBlobs 20s infinite alternate;
+.blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.6;
+    animation: float 20s infinite alternate;
     z-index: -1;
-    opacity: 0.4;
 }
 
-@keyframes floatBlobs {
-    0% { transform: translate(0, 0) scale(1); }
-    50% { transform: translate(20px, -20px) scale(1.1); }
-    100% { transform: translate(-20px, 20px) scale(1); }
+.blob:nth-child(1) {
+    width: 400px; height: 400px;
+    background: linear-gradient(135deg, #FF6B6B, #FFD166);
+    top: -100px; left: -100px;
+    animation-duration: 25s;
 }
 
-/* ---------------- HEADER ---------------- */
-header {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem 2rem;
-    background: linear-gradient(135deg, #E63946, #FF6B6B);
-    color: white;
-    border-bottom-left-radius: 30px;
-    border-bottom-right-radius: 30px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+.blob:nth-child(2) {
+    width: 500px; height: 500px;
+    background: linear-gradient(135deg, #06D6A0, #1D3557);
+    bottom: -150px; right: -150px;
+    animation-duration: 30s;
+}
+
+.blob:nth-child(3) {
+    width: 300px; height: 300px;
+    background: linear-gradient(135deg, #118AB2, #EF476F);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    animation-duration: 35s;
+}
+
+@keyframes float {
+    0% { transform: translate(0,0) scale(1); }
+    50% { transform: translate(50px, -50px) scale(1.1); }
+    100% { transform: translate(-30px, 30px) scale(0.95); }
+}
+
+/* ===========================
+   Glowing Hover Effects for Buttons and Drop Zones
+=========================== */
+button, .drop-zone {
     transition: all 0.3s ease;
 }
 
-header .logo img {
-    height: 60px;
-    margin-right: 1rem;
-    transition: transform 0.3s ease;
+button:hover, .drop-zone:hover {
+    box-shadow: 0 0 20px rgba(255,255,255,0.4),
+                0 0 40px rgba(255,107,107,0.4),
+                0 0 60px rgba(255,107,107,0.2);
+    transform: translateY(-2px) scale(1.05);
 }
 
-header .logo img:hover {
-    transform: scale(1.1) rotate(-5deg);
-}
-
-header h1 {
-    font-size: 1.8rem;
-    margin: 0.5rem 0;
-    flex: 1 1 100%;
-    text-align: center;
-    letter-spacing: 1px;
-    text-shadow: 0 2px 6px rgba(0,0,0,0.2);
-}
-
-header button {
-    background: rgba(255,255,255,0.2);
-    border: 1px solid white;
-    border-radius: 20px;
-    padding: 0.5rem 1rem;
-    color: white;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-header button:hover {
-    background: rgba(255,255,255,0.4);
-    transform: scale(1.05);
-}
-
-/* ---------------- NAVIGATION ---------------- */
-nav {
-    display: flex;
-    flex-wrap: wrap;
-    background: linear-gradient(90deg, #FF6B6B, #E63946);
-    border-radius: 20px;
-    margin: 1rem 2rem;
-    overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-
-nav .tab-button {
-    flex: 1 1 100px;
-    padding: 1rem 0;
-    cursor: pointer;
-    border: none;
-    background: none;
-    color: white;
-    font-weight: bold;
-    transition: all 0.3s ease, transform 1s ease-in-out;
-    text-align: center;
-}
-
-nav .tab-button.active {
-    background: white;
-    color: #E63946;
-    transform: scale(1.05);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    animation: floatTab 2s ease-in-out infinite alternate;
-}
-
-@keyframes floatTab {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-3px); }
-    100% { transform: translateY(0px); }
-}
-
-nav .tab-button:hover:not(.active) {
-    background: rgba(255,255,255,0.2);
-    transform: scale(1.03);
-}
-
-/* ---------------- DROP ZONES ---------------- */
-.drop-zone {
-    border: 2px dashed #E63946;
-    border-radius: 25px;
-    padding: 2rem;
-    margin: 1rem 0;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
+/* ===========================
+   Drop Zone Animations
+=========================== */
+.drop-zone::after {
+    content: "";
+    position: absolute;
     width: 100%;
-    box-sizing: border-box;
-    background: #fff;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-}
-
-.drop-zone.dragover {
-    border-color: #FF6B6B;
-    background-color: #FFEFEF;
-    transform: scale(1.02);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
-}
-
-.drop-zone:hover {
-    transform: scale(1.04) rotate(-0.5deg);
-    box-shadow: 0 8px 25px rgba(230,57,70,0.25);
-}
-
-/* ---------------- BUTTONS ---------------- */
-button {
-    background: linear-gradient(135deg, #E63946, #FF6B6B);
-    color: white;
-    padding: 0.8rem 1.5rem;
-    border: none;
+    height: 100%;
     border-radius: 25px;
-    cursor: pointer;
-    margin-top: 1rem;
-    font-size: 1rem;
-    transition: all 0.3s ease;
+    top: 0; left: 0;
+    background: linear-gradient(45deg, rgba(255,255,255,0.05), transparent);
+    pointer-events: none;
+    animation: shine 3s linear infinite;
 }
 
-button:hover {
-    transform: translateY(-4px) scale(1.08);
-    box-shadow: 0 8px 20px rgba(230,57,70,0.3);
+@keyframes shine {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
 }
 
-/* ---------------- TAB CONTENT ---------------- */
-.tab-content {
-    display: none;
-    padding: 1rem 2rem;
-    animation: fadeInContent 0.4s ease forwards;
-}
+/* ===========================
+   Floating Cards Effect for Tab Content
+=========================== */
 .tab-content.active {
-    display: block;
+    animation: slideIn 0.5s ease forwards;
 }
 
-@keyframes fadeInContent {
-    from { opacity: 0; transform: translateY(10px); }
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* ---------------- PREVIEWS ---------------- */
-#imagePreviewContainer img,
-#videoPreviewContainer video,
-#audioPreviewContainer audio,
-#filePreviewContainer span {
-    max-width: 200px;
-    margin: 0.5rem;
-    border-radius: 20px;
-    border: 1px solid #E63946;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    animation: popIn 0.5s ease forwards;
-}
-
-@keyframes popIn {
-    0% { transform: scale(0.8); opacity: 0; }
-    50% { transform: scale(1.1); opacity: 1; }
-    100% { transform: scale(1); opacity: 1; }
-}
-
+/* ===========================
+   Neon Glowing Previews
+=========================== */
 #imagePreviewContainer img:hover,
 #videoPreviewContainer video:hover,
 #audioPreviewContainer audio:hover {
-    box-shadow: 0 8px 30px rgba(230,57,70,0.35);
-    transform: scale(1.05);
-    transition: all 0.3s ease;
+    filter: drop-shadow(0 0 10px #FF6B6B)
+            drop-shadow(0 0 20px #FF6B6B)
+            drop-shadow(0 0 30px #FF6B6B);
+    transform: scale(1.1) rotate(-2deg);
 }
 
-/* ---------------- MODAL ---------------- */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 999;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.7);
-    padding: 10px;
-}
-
-.modal-content {
-    background: #F1FAEE;
-    margin: 5% auto;
-    padding: 2rem;
-    border-radius: 30px;
-    width: 100%;
-    max-width: 900px;
-    box-shadow: 0 15px 40px rgba(230,57,70,0.2);
-    transform: translateY(50px);
-    opacity: 0;
-    transition: all 0.5s ease;
-}
-
-.modal.show .modal-content {
-    transform: translateY(0);
-    opacity: 1;
-}
-
-.compare-container {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-}
-
-.compare-original, .compare-compressed {
-    width: 48%;
-    min-width: 250px;
-}
-
-.compare-original img, .compare-compressed img,
-.compare-original video, .compare-compressed video {
-    max-width: 100%;
-    border: 1px solid #E63946;
-    border-radius: 20px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-
-.close {
-    float: right;
-    font-size: 1.5rem;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-}
-
-.close:hover {
-    transform: rotate(90deg) scale(1.2);
-}
-
-/* ---------------- DARK MODE ---------------- */
-body.dark {
-    background: linear-gradient(135deg, #1D3557, #3A5A85);
-    color: #F1FAEE;
-}
-
-body.dark header {
-    background: linear-gradient(135deg, #FF6B6B, #E63946);
-}
-
-body.dark nav {
-    background: linear-gradient(90deg, #E63946, #FF6B6B);
-}
-
-body.dark nav .tab-button.active {
-    background: #1D3557;
-    color: #F1FAEE;
-}
-
-body.dark .drop-zone {
-    border-color: #FF6B6B;
-}
-
-/* ---------------- RESPONSIVE ---------------- */
+/* ===========================
+   Responsive tweaks
+=========================== */
 @media (max-width: 768px) {
-    header h1 {
-        text-align: center;
-        margin: 0.5rem 0;
-    }
-    nav {
-        flex-direction: column;
-        align-items: stretch;
-    }
-    .compare-container {
-        flex-direction: column;
-    }
-    .compare-original, .compare-compressed {
-        width: 100%;
-        margin-bottom: 10px;
-    }
-    button, select {
-        width: 100%;
-        max-width: 100%;
-    }
+    .blob { display: none; }
+    nav { flex-direction: column; }
 }
