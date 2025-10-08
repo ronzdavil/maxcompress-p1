@@ -1,53 +1,7 @@
-<header class="header">
+<header>
   <a href="/" class="logo">
     <img src="logo.png" alt="MaxCompress Logo">
   </a>
   <h1>MaxCompress</h1>
   <button id="darkModeToggle">🌙 Dark Mode</button>
 </header>
-
-<style>
-/* Basic header layout */
-.header {
-  display: flex;
-  flex-wrap: wrap;          /* allows items to wrap on small screens */
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 20px;
-  background-color: #f5f5f5;
-}
-
-.header .logo img {
-  max-width: 120px;
-  height: auto;
-}
-
-/* Responsive heading */
-.header h1 {
-  flex: 1 1 100%;           /* full width on small screens */
-  text-align: center;
-  font-size: 1.8rem;
-  margin: 10px 0;
-}
-
-/* Dark mode button */
-#darkModeToggle {
-  padding: 8px 16px;
-  font-size: 1rem;
-  cursor: pointer;
-  flex: 0 0 auto;           /* prevents button from stretching */
-}
-
-/* Media queries for larger screens */
-@media (min-width: 600px) {
-  .header {
-    flex-wrap: nowrap;       /* horizontal layout for tablets/desktops */
-  }
-  
-  .header h1 {
-    flex: 1;                 /* grow to fill space between logo & button */
-    text-align: center;
-    margin: 0;
-  }
-}
-</style>
