@@ -9,6 +9,7 @@ body {
 /* Header */
 header {
     display: flex;
+    flex-wrap: wrap; /* allow wrapping on small screens */
     align-items: center;
     justify-content: space-between;
     padding: 1rem;
@@ -21,7 +22,9 @@ header .logo img {
 }
 header h1 {
     font-size: 1.5rem;
-    margin: 0;
+    margin: 0.5rem 0; /* spacing for small screens */
+    flex: 1 1 100%;   /* full width on mobile */
+    text-align: center;
 }
 header button {
     background: none;
@@ -35,16 +38,18 @@ header button {
 /* Navigation */
 nav {
     display: flex;
+    flex-wrap: wrap; /* wrap tabs on small screens */
     background-color: #FF6B6B;
 }
 nav .tab-button {
-    flex: 1;
+    flex: 1 1 100px; /* min width 100px, grows */
     padding: 1rem;
     cursor: pointer;
     border: none;
     background: none;
     color: white;
     transition: 0.3s;
+    text-align: center;
 }
 nav .tab-button.active {
     background: white;
@@ -60,6 +65,8 @@ nav .tab-button.active {
     text-align: center;
     cursor: pointer;
     transition: 0.3s;
+    width: 100%;
+    box-sizing: border-box;
 }
 .drop-zone.dragover {
     border-color: #FF6B6B;
@@ -94,7 +101,8 @@ button:hover {
 #imagePreviewContainer img,
 #videoPreviewContainer video,
 #audioPreviewContainer audio {
-    max-width: 200px;
+    max-width: 100%; /* responsive */
+    height: auto;
     margin: 0.5rem;
     border: 1px solid #E63946;
     border-radius: 8px;
@@ -110,14 +118,16 @@ button:hover {
     width: 100%;
     height: 100%;
     background: rgba(0,0,0,0.7);
+    padding: 10px;
 }
 .modal-content {
     background: #F1FAEE;
     margin: 5% auto;
     padding: 1rem;
     border-radius: 12px;
-    width: 90%;
+    width: 100%;
     max-width: 900px;
+    box-sizing: border-box;
 }
 .modal-content h2 {
     margin-top: 0;
@@ -125,10 +135,11 @@ button:hover {
 .compare-container {
     display: flex;
     justify-content: space-between;
-    flex-wrap: wrap;
+    flex-wrap: wrap; /* stack on small screens */
 }
 .compare-original, .compare-compressed {
     width: 48%;
+    min-width: 250px;
 }
 .compare-original img, .compare-compressed img,
 .compare-original video, .compare-compressed video {
@@ -159,4 +170,27 @@ body.dark nav .tab-button.active {
 }
 body.dark .drop-zone {
     border-color: #FF6B6B;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 768px) {
+    header h1 {
+        text-align: center;
+        margin: 0.5rem 0;
+    }
+    nav {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .compare-container {
+        flex-direction: column;
+    }
+    .compare-original, .compare-compressed {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    button, select {
+        width: 100%;
+        max-width: 100%;
+    }
 }
