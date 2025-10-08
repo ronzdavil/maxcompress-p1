@@ -1,13 +1,38 @@
-/* Base */
+/* ---------------- BASE ---------------- */
 body {
     font-family: 'Poppins', Arial, sans-serif;
     margin: 0;
     background: linear-gradient(135deg, #F1FAEE, #FFF7F2);
     color: #1D3557;
     transition: background 0.3s ease, color 0.3s ease;
+    position: relative;
+    overflow-x: hidden;
 }
 
-/* Header */
+/* ---------------- BACKGROUND BLOBS ---------------- */
+body::before {
+    content: "";
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 30%, #FF6B6B, transparent 50%),
+                radial-gradient(circle at 70% 70%, #E63946, transparent 50%),
+                radial-gradient(circle at 50% 50%, #F1FAEE, transparent 50%);
+    background-size: cover;
+    animation: floatBlobs 20s infinite alternate;
+    z-index: -1;
+    opacity: 0.4;
+}
+
+@keyframes floatBlobs {
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(20px, -20px) scale(1.1); }
+    100% { transform: translate(-20px, 20px) scale(1); }
+}
+
+/* ---------------- HEADER ---------------- */
 header {
     display: flex;
     flex-wrap: wrap;
@@ -56,7 +81,7 @@ header button:hover {
     transform: scale(1.05);
 }
 
-/* Navigation */
+/* ---------------- NAVIGATION ---------------- */
 nav {
     display: flex;
     flex-wrap: wrap;
@@ -75,7 +100,7 @@ nav .tab-button {
     background: none;
     color: white;
     font-weight: bold;
-    transition: all 0.3s ease;
+    transition: all 0.3s ease, transform 1s ease-in-out;
     text-align: center;
 }
 
@@ -84,6 +109,13 @@ nav .tab-button.active {
     color: #E63946;
     transform: scale(1.05);
     box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    animation: floatTab 2s ease-in-out infinite alternate;
+}
+
+@keyframes floatTab {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-3px); }
+    100% { transform: translateY(0px); }
 }
 
 nav .tab-button:hover:not(.active) {
@@ -91,7 +123,7 @@ nav .tab-button:hover:not(.active) {
     transform: scale(1.03);
 }
 
-/* Drop zones */
+/* ---------------- DROP ZONES ---------------- */
 .drop-zone {
     border: 2px dashed #E63946;
     border-radius: 25px;
@@ -114,11 +146,11 @@ nav .tab-button:hover:not(.active) {
 }
 
 .drop-zone:hover {
-    transform: scale(1.02);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    transform: scale(1.04) rotate(-0.5deg);
+    box-shadow: 0 8px 25px rgba(230,57,70,0.25);
 }
 
-/* Buttons */
+/* ---------------- BUTTONS ---------------- */
 button {
     background: linear-gradient(135deg, #E63946, #FF6B6B);
     color: white;
@@ -132,11 +164,11 @@ button {
 }
 
 button:hover {
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+    transform: translateY(-4px) scale(1.08);
+    box-shadow: 0 8px 20px rgba(230,57,70,0.3);
 }
 
-/* Tab content */
+/* ---------------- TAB CONTENT ---------------- */
 .tab-content {
     display: none;
     padding: 1rem 2rem;
@@ -151,7 +183,7 @@ button:hover {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* Previews */
+/* ---------------- PREVIEWS ---------------- */
 #imagePreviewContainer img,
 #videoPreviewContainer video,
 #audioPreviewContainer audio,
@@ -161,15 +193,24 @@ button:hover {
     border-radius: 20px;
     border: 1px solid #E63946;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    animation: fadeIn 0.5s ease forwards;
+    animation: popIn 0.5s ease forwards;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+@keyframes popIn {
+    0% { transform: scale(0.8); opacity: 0; }
+    50% { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
 }
 
-/* Modal */
+#imagePreviewContainer img:hover,
+#videoPreviewContainer video:hover,
+#audioPreviewContainer audio:hover {
+    box-shadow: 0 8px 30px rgba(230,57,70,0.35);
+    transform: scale(1.05);
+    transition: all 0.3s ease;
+}
+
+/* ---------------- MODAL ---------------- */
 .modal {
     display: none;
     position: fixed;
@@ -185,14 +226,14 @@ button:hover {
 .modal-content {
     background: #F1FAEE;
     margin: 5% auto;
-    padding: 1.5rem 2rem;
+    padding: 2rem;
     border-radius: 30px;
     width: 100%;
     max-width: 900px;
-    box-sizing: border-box;
-    transform: translateY(-20px);
+    box-shadow: 0 15px 40px rgba(230,57,70,0.2);
+    transform: translateY(50px);
     opacity: 0;
-    transition: all 0.4s ease;
+    transition: all 0.5s ease;
 }
 
 .modal.show .modal-content {
@@ -230,7 +271,7 @@ button:hover {
     transform: rotate(90deg) scale(1.2);
 }
 
-/* Dark mode */
+/* ---------------- DARK MODE ---------------- */
 body.dark {
     background: linear-gradient(135deg, #1D3557, #3A5A85);
     color: #F1FAEE;
@@ -253,7 +294,7 @@ body.dark .drop-zone {
     border-color: #FF6B6B;
 }
 
-/* Responsive */
+/* ---------------- RESPONSIVE ---------------- */
 @media (max-width: 768px) {
     header h1 {
         text-align: center;
