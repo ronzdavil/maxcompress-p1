@@ -1,16 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset
+<urlset 
       xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 
+                          http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 
+  <!-- Homepage -->
+  <url>
+    <loc>https://maxcompress.vercel.app/</loc>
+    <lastmod>2025-10-08T07:17:42+00:00</lastmod>
+    <priority>1.0</priority>
+  </url>
 
-<url>
-  <loc>https://maxcompress.vercel.app/</loc>
-  <lastmod>2025-10-08T07:17:42+00:00</lastmod>
-</url>
+  <!-- Example about page -->
+  <url>
+    <loc>https://maxcompress.vercel.app/about.html</loc>
+    <lastmod>2025-10-08T07:17:42+00:00</lastmod>
+    <priority>0.8</priority>
+  </url>
 
+  <!-- Example contact page -->
+  <url>
+    <loc>https://maxcompress.vercel.app/contact.html</loc>
+    <lastmod>2025-10-08T07:17:42+00:00</lastmod>
+    <priority>0.8</priority>
+  </url>
 
 </urlset>
