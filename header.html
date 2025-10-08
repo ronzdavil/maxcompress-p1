@@ -1,9 +1,59 @@
-<header class="glass-header">
-  <div class="logo-container">
-    <a href="/" class="logo">
-      <img src="logo.png" alt="MaxCompress Logo" />
-    </a>
-    <h1>MaxCompress</h1>
-  </div>
-  <button id="darkModeToggle" class="dark-toggle">🌙</button>
+<header>
+  <a href="/" class="logo">
+    <img src="logo.png" alt="MaxCompress Logo">
+  </a>
+  <h1>MaxCompress</h1>
+  <button id="darkModeToggle">🌙 Dark Mode</button>
 </header>
+
+<style>
+header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background: rgba(50, 150, 250, 0.3); /* glassy blue */
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  margin: 10px;
+  transition: 0.3s;
+}
+header:hover {
+  box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+}
+header .logo img {
+  height: 50px;
+  transition: transform 0.3s;
+}
+header .logo img:hover {
+  transform: rotate(-5deg) scale(1.1);
+}
+header h1 {
+  font-size: 1.8rem;
+  color: #fff;
+  text-align: center;
+  flex: 1 1 100%;
+  margin: 10px 0;
+  text-shadow: 0 0 5px rgba(255,255,255,0.7);
+}
+header button {
+  background: rgba(255,255,255,0.2);
+  border: 1px solid #fff;
+  border-radius: 25px;
+  padding: 0.5rem 1rem;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.3s;
+}
+header button:hover {
+  background: rgba(255,255,255,0.4);
+  transform: scale(1.05);
+}
+@media (max-width:768px){
+  header {
+    justify-content: center;
+  }
+}
+</style>
