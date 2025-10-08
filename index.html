@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MaxCompress – File Compressor</title>
 <meta name="description" content="MaxCompress allows you to compress images, videos, PDFs, audio, and files online for free.">
-<meta name="google-site-verification" content="oXoh0xDP_O0hA8UAu3IYAyZxp-oA3YHS98sUkCYqXX8" />
 <link rel="stylesheet" href="style.css">
 
 <!-- Libraries -->
@@ -13,6 +12,140 @@
 <script src="https://cdn.jsdelivr.net/npm/browser-image-compression@2.0.0/dist/browser-image-compression.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/pdf-lib/dist/pdf-lib.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js"></script>
+
+<style>
+/* --- General Layout --- */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  line-height: 1.5;
+}
+
+main {
+  padding: 15px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* --- Tabs --- */
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.tab-button {
+  flex: 1 1 100px;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 1rem;
+  text-align: center;
+}
+
+/* --- Sections --- */
+.tab-content {
+  display: none;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tab-content.active {
+  display: flex;
+}
+
+/* --- Drop Zones --- */
+.drop-zone {
+  border: 2px dashed #888;
+  border-radius: 8px;
+  padding: 25px;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  box-sizing: border-box;
+  transition: background-color 0.3s;
+}
+
+.drop-zone:hover {
+  background-color: #f0f0f0;
+}
+
+/* --- Buttons and Inputs --- */
+input[type="file"], button, select {
+  width: 100%;
+  max-width: 400px;
+  padding: 8px;
+  margin: 8px 0;
+  box-sizing: border-box;
+}
+
+/* --- Preview Containers --- */
+#imagePreviewContainer, #videoPreviewContainer, #pdfPreviewContainer, #audioPreviewContainer, #filePreviewContainer,
+#imageStats, #videoStats, #pdfStats, #audioStats, #fileStats {
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 8px;
+}
+
+/* --- Compare Modal --- */
+.modal {
+  display: none; 
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  background-color: rgba(0,0,0,0.5);
+  padding: 15px;
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: 30px auto;
+  padding: 15px;
+  border-radius: 8px;
+  max-width: 800px;
+  width: 100%;
+}
+
+.compare-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.compare-original, .compare-compressed {
+  flex: 1 1 300px;
+  min-width: 250px;
+}
+
+/* --- Responsive Text --- */
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+/* --- Media Queries --- */
+@media (max-width: 768px) {
+  nav {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .compare-container {
+    flex-direction: column;
+  }
+}
+</style>
 </head>
 <body>
 
