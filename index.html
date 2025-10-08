@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MaxCompress – File Compressor</title>
 <meta name="description" content="MaxCompress allows you to compress images, videos, PDFs, audio, and files online for free.">
+
 <link rel="stylesheet" href="style.css">
 
 <!-- Libraries -->
@@ -12,265 +13,138 @@
 <script src="https://cdn.jsdelivr.net/npm/browser-image-compression@2.0.0/dist/browser-image-compression.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/pdf-lib/dist/pdf-lib.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js"></script>
-
-<style>
-/* --- General Layout --- */
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  line-height: 1.5;
-}
-
-main {
-  padding: 15px;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-/* --- Tabs --- */
-nav {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px;
-  margin-bottom: 15px;
-}
-
-.tab-button {
-  flex: 1 1 100px;
-  padding: 10px;
-  cursor: pointer;
-  font-size: 1rem;
-  text-align: center;
-}
-
-/* --- Sections --- */
-.tab-content {
-  display: none;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.tab-content.active {
-  display: flex;
-}
-
-/* --- Drop Zones --- */
-.drop-zone {
-  border: 2px dashed #888;
-  border-radius: 8px;
-  padding: 25px;
-  text-align: center;
-  cursor: pointer;
-  width: 100%;
-  box-sizing: border-box;
-  transition: background-color 0.3s;
-}
-
-.drop-zone:hover {
-  background-color: #f0f0f0;
-}
-
-/* --- Buttons and Inputs --- */
-input[type="file"], button, select {
-  width: 100%;
-  max-width: 400px;
-  padding: 8px;
-  margin: 8px 0;
-  box-sizing: border-box;
-}
-
-/* --- Preview Containers --- */
-#imagePreviewContainer, #videoPreviewContainer, #pdfPreviewContainer, #audioPreviewContainer, #filePreviewContainer,
-#imageStats, #videoStats, #pdfStats, #audioStats, #fileStats {
-  width: 100%;
-  overflow-x: auto;
-  margin-top: 8px;
-}
-
-/* --- Compare Modal --- */
-.modal {
-  display: none; 
-  position: fixed;
-  z-index: 1000;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow-y: auto;
-  background-color: rgba(0,0,0,0.5);
-  padding: 15px;
-}
-
-.modal-content {
-  background-color: #fff;
-  margin: 30px auto;
-  padding: 15px;
-  border-radius: 8px;
-  max-width: 800px;
-  width: 100%;
-}
-
-.compare-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-}
-
-.compare-original, .compare-compressed {
-  flex: 1 1 300px;
-  min-width: 250px;
-}
-
-/* --- Responsive Text --- */
-h2 {
-  font-size: 1.5rem;
-  margin-bottom: 10px;
-}
-
-label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
-}
-
-/* --- Media Queries --- */
-@media (max-width: 768px) {
-  nav {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .compare-container {
-    flex-direction: column;
-  }
-}
-</style>
 </head>
 <body>
 
-<div id="headerContainer"></div>
-<script>
-fetch('header.html')
-  .then(response => response.text())
-  .then(data => {
-    document.getElementById('headerContainer').innerHTML = data;
-    const darkBtn = document.getElementById('darkModeToggle');
-    if(darkBtn){
-        darkBtn.addEventListener('click', () => document.body.classList.toggle('dark'));
-    }
-  });
-</script>
+<!-- HEADER -->
+<header>
+    <a href="/" class="logo">
+        <img src="logo.png" alt="MaxCompress Logo">
+    </a>
+    <h1>MaxCompress</h1>
+    <button id="darkModeToggle">🌙 Dark Mode</button>
+</header>
 
+<!-- NAVIGATION -->
 <nav>
-<button class="tab-button active" data-tab="images">Images</button>
-<button class="tab-button" data-tab="videos">Videos</button>
-<button class="tab-button" data-tab="pdfs">PDFs</button>
-<button class="tab-button" data-tab="audio">Audio</button>
-<button class="tab-button" data-tab="files">Files</button>
+    <button class="tab-button active" data-tab="images">Images</button>
+    <button class="tab-button" data-tab="videos">Videos</button>
+    <button class="tab-button" data-tab="pdfs">PDFs</button>
+    <button class="tab-button" data-tab="audio">Audio</button>
+    <button class="tab-button" data-tab="files">Files</button>
 </nav>
 
 <main>
-<!-- Images -->
-<section class="tab-content active" id="images">
-<h2>Image Compressor</h2>
-<label for="imageLevel">Compression Level:</label>
-<select id="imageLevel">
-<option value="1">Level 1</option>
-<option value="2">Level 2</option>
-<option value="3">Level 3</option>
-<option value="4">Level 4</option>
-<option value="5">Level 5</option>
-<option value="6">Level 6</option>
-</select>
-<div class="drop-zone" id="dropImages">Drag & Drop Images Here or Click</div>
-<input type="file" id="imageInput" multiple accept="image/*" hidden>
-<div id="imagePreviewContainer"></div>
-<button id="compressImagesBtn">Compress Images</button>
-<div id="imageStats"></div>
-</section>
+    <!-- IMAGES -->
+    <section class="tab-content active" id="images">
+        <h2>Image Compressor</h2>
+        <label for="imageLevel">Compression Level:</label>
+        <select id="imageLevel">
+            <option value="1">Level 1</option>
+            <option value="2">Level 2</option>
+            <option value="3">Level 3</option>
+            <option value="4">Level 4</option>
+            <option value="5">Level 5</option>
+            <option value="6">Level 6</option>
+        </select>
+        <div class="drop-zone" id="dropImages">Drag & Drop Images Here or Click</div>
+        <input type="file" id="imageInput" multiple accept="image/*" hidden>
+        <div id="imagePreviewContainer"></div>
+        <button id="compressImagesBtn">Compress Images</button>
+        <div id="imageStats"></div>
+    </section>
 
-<!-- Videos -->
-<section class="tab-content" id="videos">
-<h2>Video Compressor</h2>
-<label for="videoLevel">Compression Level:</label>
-<select id="videoLevel">
-<option value="1">Level 1</option>
-<option value="2">Level 2</option>
-<option value="3">Level 3</option>
-<option value="4">Level 4</option>
-<option value="5">Level 5</option>
-<option value="6">Level 6</option>
-</select>
-<div class="drop-zone" id="dropVideos">Drag & Drop Videos Here or Click</div>
-<input type="file" id="videoInput" multiple accept="video/*" hidden>
-<div id="videoPreviewContainer"></div>
-<button id="compressVideosBtn">Compress Videos</button>
-<div id="videoStats"></div>
-</section>
+    <!-- VIDEOS -->
+    <section class="tab-content" id="videos">
+        <h2>Video Compressor</h2>
+        <label for="videoLevel">Compression Level:</label>
+        <select id="videoLevel">
+            <option value="1">Level 1</option>
+            <option value="2">Level 2</option>
+            <option value="3">Level 3</option>
+            <option value="4">Level 4</option>
+            <option value="5">Level 5</option>
+            <option value="6">Level 6</option>
+        </select>
+        <div class="drop-zone" id="dropVideos">Drag & Drop Videos Here or Click</div>
+        <input type="file" id="videoInput" multiple accept="video/*" hidden>
+        <div id="videoPreviewContainer"></div>
+        <button id="compressVideosBtn">Compress Videos</button>
+        <div id="videoStats"></div>
+    </section>
 
-<!-- PDFs -->
-<section class="tab-content" id="pdfs">
-<h2>PDF Compressor</h2>
-<label for="pdfLevel">Compression Level:</label>
-<select id="pdfLevel">
-<option value="1">Level 1</option>
-<option value="2">Level 2</option>
-<option value="3">Level 3</option>
-<option value="4">Level 4</option>
-<option value="5">Level 5</option>
-<option value="6">Level 6</option>
-</select>
-<div class="drop-zone" id="dropPDFs">Drag & Drop PDFs Here or Click</div>
-<input type="file" id="pdfInput" multiple accept="application/pdf" hidden>
-<div id="pdfPreviewContainer"></div>
-<button id="compressPDFsBtn">Compress PDFs</button>
-<div id="pdfStats"></div>
-</section>
+    <!-- PDFs -->
+    <section class="tab-content" id="pdfs">
+        <h2>PDF Compressor</h2>
+        <label for="pdfLevel">Compression Level:</label>
+        <select id="pdfLevel">
+            <option value="1">Level 1</option>
+            <option value="2">Level 2</option>
+            <option value="3">Level 3</option>
+            <option value="4">Level 4</option>
+            <option value="5">Level 5</option>
+            <option value="6">Level 6</option>
+        </select>
+        <div class="drop-zone" id="dropPDFs">Drag & Drop PDFs Here or Click</div>
+        <input type="file" id="pdfInput" multiple accept="application/pdf" hidden>
+        <div id="pdfPreviewContainer"></div>
+        <button id="compressPDFsBtn">Compress PDFs</button>
+        <div id="pdfStats"></div>
+    </section>
 
-<!-- Audio -->
-<section class="tab-content" id="audio">
-<h2>Audio Compressor</h2>
-<label for="audioLevel">Compression Level:</label>
-<select id="audioLevel">
-<option value="1">Level 1</option>
-<option value="2">Level 2</option>
-<option value="3">Level 3</option>
-<option value="4">Level 4</option>
-<option value="5">Level 5</option>
-<option value="6">Level 6</option>
-</select>
-<div class="drop-zone" id="dropAudio">Drag & Drop Audio Here or Click</div>
-<input type="file" id="audioInput" multiple accept="audio/*" hidden>
-<div id="audioPreviewContainer"></div>
-<button id="compressAudioBtn">Compress Audio</button>
-<div id="audioStats"></div>
-</section>
+    <!-- AUDIO -->
+    <section class="tab-content" id="audio">
+        <h2>Audio Compressor</h2>
+        <label for="audioLevel">Compression Level:</label>
+        <select id="audioLevel">
+            <option value="1">Level 1</option>
+            <option value="2">Level 2</option>
+            <option value="3">Level 3</option>
+            <option value="4">Level 4</option>
+            <option value="5">Level 5</option>
+            <option value="6">Level 6</option>
+        </select>
+        <div class="drop-zone" id="dropAudio">Drag & Drop Audio Here or Click</div>
+        <input type="file" id="audioInput" multiple accept="audio/*" hidden>
+        <div id="audioPreviewContainer"></div>
+        <button id="compressAudioBtn">Compress Audio</button>
+        <div id="audioStats"></div>
+    </section>
 
-<!-- Files -->
-<section class="tab-content" id="files">
-<h2>General File Compressor (ZIP)</h2>
-<div class="drop-zone" id="dropFiles">Drag & Drop Files Here or Click</div>
-<input type="file" id="fileInput" multiple hidden>
-<div id="filePreviewContainer"></div>
-<button id="compressFilesBtn">Compress Files</button>
-<div id="fileStats"></div>
-</section>
-
+    <!-- FILES -->
+    <section class="tab-content" id="files">
+        <h2>General File Compressor (ZIP)</h2>
+        <div class="drop-zone" id="dropFiles">Drag & Drop Files Here or Click</div>
+        <input type="file" id="fileInput" multiple hidden>
+        <div id="filePreviewContainer"></div>
+        <button id="compressFilesBtn">Compress Files</button>
+        <div id="fileStats"></div>
+    </section>
 </main>
 
-<!-- Modal -->
+<!-- MODAL -->
 <div id="compareModal" class="modal">
-<div class="modal-content">
-<span class="close">&times;</span>
-<h2>Compare Original vs Compressed</h2>
-<div class="compare-container">
-<div class="compare-original"><h3>Original</h3><div id="compareOriginalPreview"></div></div>
-<div class="compare-compressed"><h3>Compressed</h3><div id="compareCompressedPreview"></div></div>
-</div>
-</div>
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Compare Original vs Compressed</h2>
+        <div class="compare-container">
+            <div class="compare-original">
+                <h3>Original</h3>
+                <div id="compareOriginalPreview"></div>
+            </div>
+            <div class="compare-compressed">
+                <h3>Compressed</h3>
+                <div id="compareCompressedPreview"></div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script src="script.js"></script>
+<script>
+    // DARK MODE TOGGLE
+    const darkBtn = document.getElementById('darkModeToggle');
+    darkBtn.addEventListener('click', () => document.body.classList.toggle('dark'));
+</script>
 </body>
 </html>
