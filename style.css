@@ -1,137 +1,149 @@
-/* ===========================
-   Base & Layout
-=========================== */
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  background-color: #F1FAEE;
-  color: #1D3557;
-  overflow-x: hidden;
-  position: relative;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MaxCompress – File Compressor</title>
+<meta name="description" content="MaxCompress allows you to compress images, videos, PDFs, audio, and files online for free.">
+<link rel="stylesheet" href="style.css">
 
-header {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-  background-color: #E63946;
-  color: white;
-}
-header h1 { flex: 1 1 100%; text-align:center; margin:0.5rem 0; }
-header button { background:none; border:1px solid white; border-radius:8px; padding:0.5rem 1rem; color:white; cursor:pointer; }
+<!-- Libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/browser-image-compression@2.0.0/dist/browser-image-compression.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pdf-lib/dist/pdf-lib.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js"></script>
+</head>
+<body>
 
-/* Viral Banner */
-.viral-banner {
-  text-align:center;
-  padding:10px;
-  background:linear-gradient(45deg,#FF6B6B,#FFD166);
-  color:white;
-  font-weight:bold;
-  font-size:1.2rem;
-  animation: bounce 2s infinite alternate;
-  border-radius:12px;
-  margin:10px;
-}
-@keyframes bounce { 0%{ transform: translateY(0); } 100%{ transform: translateY(-5px); } }
+<!-- Floating Background Blobs -->
+<div class="blob"></div>
+<div class="blob"></div>
+<div class="blob"></div>
 
-/* Tabs */
-nav {
-  display:flex;
-  flex-wrap:wrap;
-  background:#FF6B6B;
-}
-nav .tab-button {
-  flex:1 1 100px;
-  padding:1rem;
-  cursor:pointer;
-  border:none;
-  background:none;
-  color:white;
-  transition:0.3s;
-  text-align:center;
-}
-nav .tab-button.active { background:white; color:#E63946; }
+<!-- Header -->
+<header>
+  <h1>MaxCompress</h1>
+  <button id="darkModeToggle">Toggle Dark Mode</button>
+</header>
 
-/* Drop Zones */
-.drop-zone {
-  border:2px dashed #E63946;
-  border-radius:25px;
-  padding:2rem;
-  margin:1rem 0;
-  text-align:center;
-  cursor:pointer;
-  transition: all 0.3s ease;
-}
-.drop-zone:hover { background-color:#FFEFEF; transform:scale(1.02); }
+<!-- Viral Banner -->
+<div class="viral-banner">🔥 Compress & Share Your Files Instantly! 🔥</div>
 
-/* Buttons */
-button {
-  background-color:#E63946;
-  color:white;
-  padding:0.8rem 1.5rem;
-  border:none;
-  border-radius:12px;
-  cursor:pointer;
-  margin-top:1rem;
-  font-size:1rem;
-  transition: all 0.3s ease;
-}
-button:hover { background-color:#FF6B6B; transform:scale(1.05); box-shadow:0 0 20px rgba(255,107,107,0.4); }
+<!-- Tabs -->
+<nav>
+  <button class="tab-button active" data-tab="images">Images</button>
+  <button class="tab-button" data-tab="videos">Videos</button>
+  <button class="tab-button" data-tab="pdfs">PDFs</button>
+  <button class="tab-button" data-tab="audio">Audio</button>
+  <button class="tab-button" data-tab="files">Files</button>
+</nav>
 
-/* Tab content */
-.tab-content { display:none; padding:1rem; }
-.tab-content.active { display:block; animation: slideIn 0.5s ease forwards; }
+<!-- Main Content -->
+<main>
+  <!-- Images -->
+  <section class="tab-content active" id="images">
+    <h2>Image Compressor</h2>
+    <label for="imageLevel">Compression Level:</label>
+    <select id="imageLevel">
+      <option value="1">Level 1</option>
+      <option value="2">Level 2</option>
+      <option value="3">Level 3</option>
+      <option value="4">Level 4</option>
+      <option value="5">Level 5</option>
+      <option value="6">Level 6</option>
+    </select>
+    <div class="drop-zone" id="dropImages">Drag & Drop Images Here or Click</div>
+    <input type="file" id="imageInput" multiple accept="image/*" hidden>
+    <div id="imagePreviewContainer"></div>
+    <button id="compressImagesBtn">Compress Images</button>
+    <div class="progress-bar"><div id="imageProgress"></div></div>
+    <div id="imageStats"></div>
+  </section>
 
-@keyframes slideIn { from{opacity:0; transform:translateY(20px);} to{opacity:1; transform:translateY(0);} }
+  <!-- Videos -->
+  <section class="tab-content" id="videos">
+    <h2>Video Compressor</h2>
+    <label for="videoLevel">Compression Level:</label>
+    <select id="videoLevel">
+      <option value="1">Level 1</option>
+      <option value="2">Level 2</option>
+      <option value="3">Level 3</option>
+      <option value="4">Level 4</option>
+      <option value="5">Level 5</option>
+      <option value="6">Level 6</option>
+    </select>
+    <div class="drop-zone" id="dropVideos">Drag & Drop Videos Here or Click</div>
+    <input type="file" id="videoInput" multiple accept="video/*" hidden>
+    <div id="videoPreviewContainer"></div>
+    <button id="compressVideosBtn">Compress Videos</button>
+    <div class="progress-bar"><div id="videoProgress"></div></div>
+    <div id="videoStats"></div>
+  </section>
 
-/* Previews */
-#imagePreviewContainer img, #videoPreviewContainer video, #audioPreviewContainer audio {
-  max-width:100%;
-  margin:0.5rem;
-  border:1px solid #E63946;
-  border-radius:12px;
-  transition: all 0.3s ease;
-}
-#imagePreviewContainer img:hover, #videoPreviewContainer video:hover, #audioPreviewContainer audio:hover {
-  transform: scale(1.1);
-  filter: drop-shadow(0 0 10px #FF6B6B);
-}
+  <!-- PDFs -->
+  <section class="tab-content" id="pdfs">
+    <h2>PDF Compressor</h2>
+    <label for="pdfLevel">Compression Level:</label>
+    <select id="pdfLevel">
+      <option value="1">Level 1</option>
+      <option value="2">Level 2</option>
+      <option value="3">Level 3</option>
+      <option value="4">Level 4</option>
+      <option value="5">Level 5</option>
+      <option value="6">Level 6</option>
+    </select>
+    <div class="drop-zone" id="dropPDFs">Drag & Drop PDFs Here or Click</div>
+    <input type="file" id="pdfInput" multiple accept="application/pdf" hidden>
+    <div id="pdfPreviewContainer"></div>
+    <button id="compressPDFsBtn">Compress PDFs</button>
+    <div class="progress-bar"><div id="pdfProgress"></div></div>
+    <div id="pdfStats"></div>
+  </section>
 
-/* Modal */
-.modal { display:none; position:fixed; z-index:999; left:0; top:0; width:100%; height:100%; background: rgba(0,0,0,0.7); overflow-y:auto; padding:10px; }
-.modal-content { background:#F1FAEE; margin:5% auto; padding:1rem; border-radius:12px; width:90%; max-width:900px; }
-.compare-container { display:flex; flex-wrap:wrap; gap:10px; }
-.compare-original, .compare-compressed { flex:1 1 45%; min-width:250px; }
-.close { float:right; font-size:1.5rem; cursor:pointer; }
+  <!-- Audio -->
+  <section class="tab-content" id="audio">
+    <h2>Audio Compressor</h2>
+    <label for="audioLevel">Compression Level:</label>
+    <select id="audioLevel">
+      <option value="1">Level 1</option>
+      <option value="2">Level 2</option>
+      <option value="3">Level 3</option>
+      <option value="4">Level 4</option>
+      <option value="5">Level 5</option>
+      <option value="6">Level 6</option>
+    </select>
+    <div class="drop-zone" id="dropAudio">Drag & Drop Audio Here or Click</div>
+    <input type="file" id="audioInput" multiple accept="audio/*" hidden>
+    <div id="audioPreviewContainer"></div>
+    <button id="compressAudioBtn">Compress Audio</button>
+    <div class="progress-bar"><div id="audioProgress"></div></div>
+    <div id="audioStats"></div>
+  </section>
 
-/* Dark mode */
-body.dark { background-color:#1D3557; color:#F1FAEE; }
-body.dark header { background:#FF6B6B; }
-body.dark nav { background:#E63946; }
-body.dark nav .tab-button.active { background:#1D3557; color:#F1FAEE; }
-body.dark .drop-zone { border-color:#FF6B6B; }
+  <!-- Files -->
+  <section class="tab-content" id="files">
+    <h2>General File Compressor (ZIP)</h2>
+    <div class="drop-zone" id="dropFiles">Drag & Drop Files Here or Click</div>
+    <input type="file" id="fileInput" multiple hidden>
+    <div id="filePreviewContainer"></div>
+    <button id="compressFilesBtn">Compress Files</button>
+    <div class="progress-bar"><div id="fileProgress"></div></div>
+    <div id="fileStats"></div>
+  </section>
+</main>
 
-/* Floating Blobs */
-.blob {
-  position:absolute;
-  border-radius:50%;
-  filter:blur(120px);
-  opacity:0.6;
-  animation: float 25s infinite alternate;
-  z-index:-1;
-}
-.blob:nth-child(1){ width:400px;height:400px;background:linear-gradient(135deg,#FF6B6B,#FFD166); top:-100px; left:-100px; }
-.blob:nth-child(2){ width:500px;height:500px;background:linear-gradient(135deg,#06D6A0,#1D3557); bottom:-150px; right:-150px; }
-.blob:nth-child(3){ width:300px;height:300px;background:linear-gradient(135deg,#118AB2,#EF476F); top:50%; left:50%; transform:translate(-50%,-50%); }
+<!-- Modal -->
+<div id="compareModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>Compare Original vs Compressed</h2>
+    <div class="compare-container">
+      <div class="compare-original"><h3>Original</h3><div id="compareOriginalPreview"></div></div>
+      <div class="compare-compressed"><h3>Compressed</h3><div id="compareCompressedPreview"></div></div>
+    </div>
+  </div>
+</div>
 
-@keyframes float {0%{transform:translate(0,0) scale(1);}50%{transform:translate(50px,-50px) scale(1.1);}100%{transform:translate(-30px,30px) scale(0.95);}}
-
-/* Responsive */
-@media(max-width:768px){
-  nav{flex-direction:column;}
-  .compare-container{flex-direction:column;}
-  .blob{display:none;}
-  .viral-banner{font-size:1rem;}
-}
+<script src="script.js"></script>
+</body>
+</html>
